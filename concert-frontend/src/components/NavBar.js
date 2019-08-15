@@ -1,5 +1,4 @@
 import React from 'react'
-import {Navbar,NavDropdown,Form,FormControl,Button,Nav}from 'react-bootstrap/Navbar'
 
 class NavBar extends React.Component{
 
@@ -7,6 +6,7 @@ class NavBar extends React.Component{
   render(){
     return(
       <div>
+        Navbar
 
       </div>
     )

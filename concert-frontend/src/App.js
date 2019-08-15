@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomePage from './components/HomePage'
 import UserPage from './components/UserPage'
 import NavBar from './components/NavBar'
+import InfoContainer from './containers/InfoContainer'
 
 class App extends React.Component{
 
@@ -20,6 +21,7 @@ class App extends React.Component{
               <Route exact path="/create" component={CreateAccount}/>
               <Route exact path="/home" component={HomePage}/>
               <Route exact path="/mypage" component={UserPage}/>
+              <Route exact path="/info" component ={InfoContainer}/>
             </React.Fragment>
          </Router>
        </div>

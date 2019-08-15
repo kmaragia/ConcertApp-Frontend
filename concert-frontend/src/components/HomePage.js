@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchContainer from '../containers/SearchContainer'
-import _ from 'lodash'
+
 
 
 class HomePage extends React.Component{
@@ -26,22 +26,14 @@ class HomePage extends React.Component{
 
   handleSearchTerm = (event) => {
     event.preventDefault()
-    // const filteredEventsClone = [...this.state.filteredEvents]
-    // const filteredList = filteredEventsClone.filter(eventClone => {
-    //   return eventClone.name.includes(event.target.value)
-    // })
+    const filteredEventsClone = [...this.state.allEvents]
+    const filteredList = filteredEventsClone.filter(eventClone => {
+      return eventClone.name.includes(event.target.value)
+    })
     this.setState({
       searchTerm: event.target.value,
-      // filteredEvents: filteredList
+      filteredEvents: filteredList
     })
-  }
-  handleSelect = (event)=>{
-    event.preventDefault()
-    this.setState({
-       select: event.target.value
-    })
-
-
   }
   handleSubmit = (event) => {
     event.preventDefault()
@@ -53,24 +45,25 @@ class HomePage extends React.Component{
   render(){
     return(
       <div>
-        <form >
-          <select onChange={this.handleSelect}>
-            <option value="select">select</option>
-            <option value="artist">artist</option>
-            <option value="city">city</option>
-          </select>
-          <input type="text" onChange={this.handleSearchTerm}/>
-          <input type="submit" value="Submit"/>
+        <form>
+          <input type="text" value={this.state.searchTerm} onChange={this.handleSearchTerm} />
+        {this.state.filteredEvents.map(event => {
+          return <SearchContainer city={this.state.city} artist={this.state.artist} event={event}/>
+        })}
         </form>
      </div>
     )
   }
 }
-{/*<form>
-  <input type="text" value={this.state.searchTerm} onChange={this.handleSearchTerm} />
-{this.state.filteredEvents.map(event => {
-  return <SearchContainer city={this.state.city} artist={this.state.artist} event={event}/>
-})}
-</form>*/}
+{/*<form >
+  <select onChange={this.handleSelect}>
+    <option value="select">select</option>
+    <option value="artist">artist</option>
+    <option value="city">city</option>
+  </select>
+  <input type="text" onChange={this.handleSearchTerm}/>
+  <input type="submit" value="Submit"/>
+</form>
+  */}
 
 export default HomePage;
