@@ -11,15 +11,16 @@ class Login extends React.Component {
       nameValue: '',
       passwordValue:'',
       redirect: false,
-      redirect2: false
     };
   }
   handleChangeName = (event) => {
+    event.preventDefault();
     this.setState({
       nameValue: event.target.value,
     });
   }
   handleChangePassword = (event) => {
+    event.preventDefault();
     this.setState({
       passwordValue: event.target.value
     });
@@ -27,21 +28,35 @@ class Login extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      redirect:true
-    })
-  }
+    fetch("http://localhost:3000/login",{
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        username: this.state.nameValue,
+        password: this.state.passwordValue
+      })
+    }).then(response => response.json())
+    .then(data => {
+    if (data.authenticated){
+      this.props.updateCurrentUser(data.user)
+      localStorage.setItem("jwt", data.token)
+    }
+    else {
+      alert("incorrect")
+    }
+  })
+}
+
   handleCreateAccount = (event) => {
     event.preventDefault();
     this.setState({
-      redirect2:true
+      redirect:true
     })
   }
 
   render() {
     return (
       <div>
-      {this.state.redirect? <Redirect to="/home"/>:(
       <div className="ui form">
         <form onSubmit={this.handleSubmit} className="form-box">
           <div className="field" >
@@ -61,16 +76,14 @@ class Login extends React.Component {
           <input className="ui submit button" type="submit" value="Login" />
         </form>
         <br/>
-        {this.state.redirect2? <Redirect to="/create"/>:(
+        {this.state.redirect? <Redirect to="/create"/>:(
           <form onSubmit={this.handleCreateAccount}>
           <input className="ui submit button" type="submit" value="CreateAccount" />
           </form>
         )}
     </div>
-  )}
   </div>
-    );
-  }
+  )}
 }
 
 

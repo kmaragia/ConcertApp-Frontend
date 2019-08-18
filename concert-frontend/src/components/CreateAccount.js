@@ -44,15 +44,11 @@ class CreateAccount extends React.Component{
       passwordValue2: event.target.value
     });
   }
-  handleChangeDob = (event) => {
-    this.setState({
-      dob: event.target.value
-    });
-  }
+
 
   handleSubmit = (event) => {
     event.preventDefault();
-    let body = JSON.stringify({user: {name: this.state.name, DOB:this.state.dob, password:this.state.passwordValue, Phone_number:this.state.phoneNumber, email:this.state.emailValue} })
+    let body = JSON.stringify({user: {username: this.state.name, password:this.state.passwordValue, Phone_number:this.state.phoneNumber, email:this.state.emailValue} })
     fetch("http://localhost:3000/users", {
       method:"POST",
       headers: {
@@ -72,7 +68,7 @@ class CreateAccount extends React.Component{
          <div>
            {this.state.redirect? <Redirect to="/login"/>:(
           <form onSubmit={this.handleSubmit}>
-              <label>Enter Name:</label>
+              <label>Enter username:</label>
               <input type="text" value={this.state.nameValue} onChange={this.handleChangeName} />
 
 
@@ -82,10 +78,6 @@ class CreateAccount extends React.Component{
 
               <label>Enter Phone Number:</label>
               <input type="tel"value={this.state.phoneNumber} onChange={this.handleChangePhone}/>
-
-
-              <label>DOB</label>
-              <input type="date"value={this.state.dob} onChange={this.handleChangeDob}/>
 
 
               <label>Enter Password:</label>

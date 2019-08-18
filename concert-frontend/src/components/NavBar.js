@@ -2,11 +2,15 @@ import React from 'react'
 
 class NavBar extends React.Component{
 
-
+  logOut = (event)=> {
+    event.preventDefault()
+    localStorage.removeItem("jwt")
+    this.props.updateCurrentUser(null)
+  }
   render(){
     return(
       <div>
-        Navbar
+        <button onClick={this.logOut}>logout</button>
 
       </div>
     )
