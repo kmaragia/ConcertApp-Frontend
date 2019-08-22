@@ -1,10 +1,10 @@
 .App {
   text-align: center;
 }
-/* body {
-  background-image: url("https://cdn.wallpapersafari.com/89/6/7Pu0LF.jpg");
+body {
+  background-image: url("/Users/kemunto/Downloads/lum3n--RBuQ2PK_L8-unsplash.jpg");
   background-color: #cccccc;
- } */
+ }
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -21,9 +21,51 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.ui-celled-grid{
+  border: solid black 2px;
+}
 .App-link {
   color: #61dafb;
+}
+.btn{
+  color: blue !important;
+}
+.concert-cards{
+
+  display: flex;
+  height: 500px;
+  flex-wrap:wrap;
+  margin-left: 40px;
+
+}
+.pos{
+  
+}
+#one{
+  border: solid black 5px
+}
+#two{
+  border: solid black 5px
+}
+#three{
+  border: solid black 5px
+}
+#four{
+  border: solid black 5px
+}
+#five{
+  border: solid black 5px
+}
+.user-box{
+  display: flex !important;
+  margin-top: 40px;
+  margin-left: 20px;
+
+}
+.card-box{
+  border: solid black 5px !important;
+  margin-right: 40px !important;
+  margin-top: 0px !important;
 }
 
 @keyframes App-logo-spin {

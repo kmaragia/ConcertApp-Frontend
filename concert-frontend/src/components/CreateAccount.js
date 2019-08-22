@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router'
+import { Route, Redirect, withRouter } from 'react-router'
 
 
 
@@ -8,47 +8,54 @@ class CreateAccount extends React.Component{
   constructor() {
     super()
     this.state = {
-      nameValue: '',
-      passwordValue:'',
-      passwordValue2:'',
-      emailValue: '',
-      phoneNumber:'',
-      dob:'',
-      redirect: false
+      firstName: '',
+      lastName:'',
+      userName: '',
+      password:'',
+      email:'',
+      phoneNumber:''
     };
   }
 
-
-  handleChangeName = (event) => {
+  firstName = (event) => {
     this.setState({
-      nameValue: event.target.value,
+      firstName: event.target.value,
     });
   }
-  handleChangeEmail = (event) => {
+  lastName = (event) => {
     this.setState({
-      emailValue: event.target.value,
+      lastName: event.target.value,
     });
   }
-  handleChangePhone = (event) => {
+  userName = (event) => {
     this.setState({
-      phoneNumber: event.target.value,
+      userName: event.target.value,
     });
   }
-  handleChangePassword = (event) => {
+  password = (event) => {
     this.setState({
-      passwordValue: event.target.value
+      password: event.target.value
     });
   }
-  handleChangePassword2 = (event) => {
+  email = (event) => {
     this.setState({
-      passwordValue2: event.target.value
+      email: event.target.value
     });
   }
-
+  phoneNumber = (event) => {
+    this.setState({
+      phoneNumber: event.target.value
+    });
+  }
+  handleGoBack = () => {
+    this.props.history.push("/login")
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    let body = JSON.stringify({user: {username: this.state.name, password:this.state.passwordValue, Phone_number:this.state.phoneNumber, email:this.state.emailValue} })
+    console.log("pressed")
+    let body = JSON.stringify({user:{first_name:this.state.firstName,last_name:this.state.lastName, username: this.state.userName, password:this.state.password, phone_number:this.state.phoneNumber, email:this.state.email} })
+
     fetch("http://localhost:3000/users", {
       method:"POST",
       headers: {
@@ -56,36 +63,58 @@ class CreateAccount extends React.Component{
       },
       body: body
     }).then(response => response.json())
-    this.setState({
-      redirect:true
-    })
+    .then(data => {
+    console.log(data)
+    this.props.history.push("/login")
+
+  })
   }
 
 
 
   render(){
     return(
+
          <div>
-           {this.state.redirect? <Redirect to="/login"/>:(
-          <form onSubmit={this.handleSubmit}>
-              <label>Enter username:</label>
-              <input type="text" value={this.state.nameValue} onChange={this.handleChangeName} />
+           <form onSubmit={this.handleSubmit} className="ui form segment">
+              <p>Let's go ahead and get you signed up.</p>
+              <div className="two fields">
+                <div className="field">
+                  <label>First Name</label>
+                  <input value={this.state.firstName} onChange={this.firstName} maxlength="10" placeholder="First Name" name="first-name" type="text" required/>
+                </div>
+                <div className="field">
+                  <label>Last Name</label>
+                  <input value={this.state.lastName} onChange={this.lastName}maxlength="10" placeholder="Last Name" name="last-name" type="text" required/>
+                </div>
+              </div>
+              <div className="field">
+                <label>Username</label>
+                <input value={this.state.userName} onChange={this.userName}maxlength="9"placeholder="Username" name="userName" type="text" required/>
+              </div>
+              <div className="field">
+                <label>Email</label>
+                <input value={this.state.email} onChange={this.email}type="email" placeholder="Email" name="email" required/>
+              </div>
+              <div className="field">
+                <label>Phone Number (format: xxx-xxx-xxxx)</label>
+                <input value={this.state.phoneNumber} onChange={this.phoneNumber} placeholder="Phone Number" type="tel" name="phone number" pattern="^\d{3}-\d{3}-\d{4}$" maxlength="12" size="12"required/>
+              </div>
+              <div className="field">
+                <label>Password</label>
+                <input value={this.state.password} onChange={this.password}type="password" name="password" minlength="8" maxlength="15"required/>
+              </div>
+              <div className="inline field">
+                <div className="ui checkbox">
+                  <input type="checkbox" name="terms" required/>
+                  <label>I agree to the Terms and Conditions</label>
+                </div>
+              </div>
+                <button className="ui primary submit button">Create Account</button>
+              <div className="ui error message"></div>
+            </form>
+            <button onClick={this.handleGoBack} className="ui inverted blue button">Back</button>
 
-
-              <label>Enter Email Address:</label>
-              <input type="email" value={this.state.emailValue} onChange={this.handleChangeEmail}/>
-
-
-              <label>Enter Phone Number:</label>
-              <input type="tel"value={this.state.phoneNumber} onChange={this.handleChangePhone}/>
-
-
-              <label>Enter Password:</label>
-              <input type="password"value={this.state.passwordValue} onChange={this.handleChangePassword}/>
-
-              <input type="submit" value="Create Account" />
-          </form>
-        )}
         </div>
 
   )
@@ -93,5 +122,4 @@ class CreateAccount extends React.Component{
 }
 
 
-
-export default CreateAccount;
+export default withRouter(CreateAccount);

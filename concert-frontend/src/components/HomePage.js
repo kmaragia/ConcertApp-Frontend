@@ -44,26 +44,24 @@ class HomePage extends React.Component{
 
   render(){
     return(
-      <div>
+      <div class="ui search">
         <form>
-          <input type="text" value={this.state.searchTerm} onChange={this.handleSearchTerm} />
-        {this.state.filteredEvents.map(event => {
-          return <SearchContainer city={this.state.city} artist={this.state.artist} event={event}/>
-        })}
-        </form>
+           <h1>Search For Concerts:</h1>
+            <input class="prompt" type="text" value={this.state.searchTerm} onChange={this.handleSearchTerm} />
+          {this.state.filteredEvents.map(event => {
+            return <SearchContainer city={this.state.city} artist={this.state.artist} event={event}/>
+          })}
+          </form>
      </div>
     )
   }
 }
-{/*<form >
-  <select onChange={this.handleSelect}>
-    <option value="select">select</option>
-    <option value="artist">artist</option>
-    <option value="city">city</option>
-  </select>
-  <input type="text" onChange={this.handleSearchTerm}/>
-  <input type="submit" value="Submit"/>
-</form>
-  */}
+{/*  <form>
+    <input type="text" value={this.state.searchTerm} onChange={this.handleSearchTerm} />
+  {this.state.filteredEvents.map(event => {
+    return <SearchContainer city={this.state.city} artist={this.state.artist} event={event}/>
+  })}
+  </form>*/}
+
 
 export default HomePage;
